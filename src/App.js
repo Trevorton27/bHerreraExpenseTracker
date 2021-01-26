@@ -39,18 +39,12 @@ class App extends React.Component {
     });
   }
 
-  saveExpense(expense) {
-    const savedExpenses = this.getSavedExpenses();
-    const updatedExpenses = [...savedExpenses, expense];
-    localStorage.setItem('expenses', JSON.stringify(updatedExpenses));
-  }
-
   handleDelete(id) {
     this.setState((prevState) => {
       const updatedExpenseData = prevState.expenseData.filter(
         (expense) => expense.id !== id
       );
-      localStorage.setItem('expenses', JSON.stringify(updatedExpenseData));
+
       return {
         expenseData: updatedExpenseData
       };
@@ -66,6 +60,10 @@ class App extends React.Component {
       this.state.amount &&
       this.state.date;
 
+    if (!isFormComplete) {
+      return alert('Please fill out all fields before submitting.');
+    }
+
     const newExpense = {
       id: Math.random(),
       description: this.state.description,
@@ -73,18 +71,14 @@ class App extends React.Component {
       amount: this.state.amount,
       date: this.state.date
     };
-    isFormComplete
-      ? this.setState({
-          expenseData: [...this.state.expenseData, newExpense],
-          description: '',
-          merchantName: '',
-          amount: '',
-          date: ''
-        })
-      : alert('Please fill out all fields before submitting.');
 
-    localStorage.setItem('expenses', JSON.stringify(this.state.expenseData));
-    console.log('expenseData though: ', this.state.expenseData);
+    this.setState({
+      expenseData: [...this.state.expenseData, newExpense],
+      description: '',
+      merchantName: '',
+      amount: '',
+      date: ''
+    });
   }
 
   render() {
