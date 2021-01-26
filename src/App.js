@@ -33,10 +33,9 @@ class App extends React.Component {
   }
 
   handleChange(e) {
-    //const { name, value } = e.target;
-    console.log('name ', e.target.name, 'value ', e.target.value);
+    const { name, value } = e.target;
     this.setState({
-      [e.target.name]: e.target.value
+      [name]: value
     });
   }
 
